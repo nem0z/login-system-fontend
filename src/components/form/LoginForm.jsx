@@ -14,9 +14,27 @@ export default function() {
         },
     ];
 
+    const api = 'http://localhost:3000/login';
+
+    const handleSubmit = values => {
+        const req = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        };
+
+        return fetch(api, req)
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.error(err));
+    }
+
     return (
         <div>
-            <Form submitAPI={'http://localhost:3000/login'} inputs={inputs}/>
+            <Form inputs={inputs} onSubmit={handleSubmit}/>
         </div>
     ); 
         

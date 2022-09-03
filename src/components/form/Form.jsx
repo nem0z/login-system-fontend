@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useRef } from "react";
 
-export default function({inputs, submitAPI}) {
+export default function({inputs, onSubmit}) {
 
     const [values, setValues] = useState(
         Object.fromEntries(inputs.map(input => [input.name, '']))
@@ -15,19 +14,7 @@ export default function({inputs, submitAPI}) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        const req = {
-            method: "POST",
-            mode: "no-cors",
-            headers: {
-                "accept": "application/json"
-            },
-            body: JSON.stringify(values)
-        };
-
-        return fetch(submitAPI, req)
-            .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.error(err));
+        onSubmit(values);
     }
 
     return (
