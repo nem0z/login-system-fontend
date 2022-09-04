@@ -1,37 +1,26 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function({inputs, onSubmit}) {
 
-    const [values, setValues] = useState(
-        Object.fromEntries(inputs.map(input => [input.name, '']))
-    );
-
-    const updateValues = (inputName, value) => {
-        let newValues = values;
-        newValues[inputName] = value;
-        setValues(newValues);
-    }
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        onSubmit(values);
-    }
+    const { register, handleSubmit, formState } = useForm();
+    const { errors, isSubmitting } = formState;
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             { inputs.map((input, k) => (
-                <div key={k}>
+                <div key={k} className="required">
                     <label htmlFor={input.name}>{input.label}</label>
                     <input
                         name={input.name}
                         type={input.type}
-                        onChange={e => updateValues(input.name, e.target.value)}
+                        {...register(input.name, {required: "This field must be filled"})}
                     />
+                    { errors[input.name] && <span className="errorMessage">{errors[input.name].message}</span> }
                 </div>
                 )) 
             }
 
-            <button type="submit">Submit</button>
+            <button type="submit" disabled={isSubmitting}>Submit</button>
       </form>
     );
 }

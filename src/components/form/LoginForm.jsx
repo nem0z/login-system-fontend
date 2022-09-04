@@ -1,20 +1,7 @@
 import Form from "./Form";
+import { loginAPI, loginFields } from "./formConfig";
 
 export default function({onSubmit}) {
-    const inputs = [
-        {
-            "name": "username",
-            "label": "Username",
-            "type": "text",
-        },
-        {
-            "name": "password",
-            "label": "Password",
-            "type": "password",
-        },
-    ];
-
-    const api = 'http://localhost:3000/login';
 
     const handleSubmit = values => {
         const req = {
@@ -26,7 +13,7 @@ export default function({onSubmit}) {
             body: JSON.stringify(values)
         };
 
-        return fetch(api, req)
+        return fetch(loginAPI, req)
             .then(res => res.json())
             .then(data => onSubmit(data))
             .catch(err => console.error(err));
@@ -34,7 +21,7 @@ export default function({onSubmit}) {
 
     return (
         <div>
-            <Form inputs={inputs} onSubmit={handleSubmit}/>
+            <Form inputs={loginFields} onSubmit={handleSubmit}/>
         </div>
     ); 
         
