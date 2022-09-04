@@ -15,7 +15,12 @@ export default function({onSubmit}) {
         };
 
         return fetch(registerAPI, req)
-            .then(res => res.json())
+            .then(res => {
+                if(res.status === 200) return res.json();
+                res.json().then(err => {
+                    throw(err);
+                });
+            })
             .then(data => onSubmit(data))
             .catch(err => console.error(err));
     }

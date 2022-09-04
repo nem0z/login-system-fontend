@@ -10,6 +10,7 @@ function App() {
   const [display, setDisplay] = useState(null);
 
   const login = token => {
+	if(!token) return;
     setToken(token);
 	sessionStorage.setItem('token', token);
   };
