@@ -6,11 +6,12 @@ import LoginForm from './components/form/LoginForm';
 import RegisterForm from './components/form/RegisterForm';
 
 function App() {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(sessionStorage.getItem('token') ?? null);
   const [display, setDisplay] = useState(null);
 
   const login = token => {
     setToken(token);
+	sessionStorage.setItem('token', token);
   };
 
   const register = data => {
