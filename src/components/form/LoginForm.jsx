@@ -1,6 +1,6 @@
 import Form from "./Form";
 
-export default function() {
+export default function({onSubmit}) {
     const inputs = [
         {
             "name": "username",
@@ -28,7 +28,7 @@ export default function() {
 
         return fetch(api, req)
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => onSubmit(data))
             .catch(err => console.error(err));
     }
 
