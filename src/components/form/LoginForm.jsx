@@ -1,7 +1,7 @@
 import Form from "./Form";
 import { loginAPI, loginFields } from "./formConfig";
 
-export default function({onSubmit}) {
+export default function LoginForm({onSubmit, logged}) {
 
     const handleSubmit = values => {
         const req = {

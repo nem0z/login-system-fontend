@@ -1,14 +1,16 @@
 import { useForm } from "react-hook-form";
 
+import './Form.css';
+
 export default function({inputs, onSubmit}) {
 
     const { register, handleSubmit, formState } = useForm();
     const { errors, isSubmitting } = formState;
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className=".form">
             { inputs.map((input, k) => (
-                <div key={k} className="required">
+                <div key={k} className="formField required">
                     <label htmlFor={input.name}>{input.label}</label>
                     <input
                         name={input.name}

@@ -2,7 +2,7 @@ import Form from "./Form";
 import { registerAPI, registerFields } from "./formConfig";
 
 
-export default function({onSubmit}) {
+export default function RegisterForm({onSubmit, logged}) {
 
     const handleSubmit = values => {
         const req = {
