@@ -24,12 +24,14 @@ import './components/form/Form.css';
 
 // app
 function App() {
-	const [token, setToken] = useState(sessionStorage.getItem('token') || null);
+	const [user, setUser] = useState(	typeof sessionStorage.getItem('user') === "string" ? 
+										JSON.parse(sessionStorage.getItem('user')) : 
+										null);
 
-	const login = token => {
-		if (!token) return;
-		sessionStorage.setItem('token', token);
-		return setToken(token);
+	const login = user => {
+		if (!user) return;
+		sessionStorage.setItem('user', JSON.stringify(user));
+		return setUser(user);
 	};
 
 	const register = data => {
@@ -38,8 +40,8 @@ function App() {
 
 	const logout = e => {
 		e.preventDefault();
-		sessionStorage.removeItem('token');
-		return setToken(null);
+		sessionStorage.removeItem('user');
+		return setUser(null);
 	}
   
   // render
@@ -52,12 +54,12 @@ function App() {
 					<li>
 						<Link to="/" className="link">Home</Link>
 					</li>
-					{ !token &&
+					{ !user?.credential?.token &&
 						<li>
 							<Link to="/login" className="link">Login</Link>
 						</li>
 					}
-					{ !token &&
+					{ !user?.credential?.token &&
 						<li>
 							<Link to="/register" className="link">Register</Link>
 						</li>
@@ -72,11 +74,11 @@ function App() {
 				<Routes>
 					<Route 
 						path="/"
-						element={ <Home user={"Idz"} token={token} /> }
+						element={ <Home user={user} /> }
 					/>
 						
 					{
-						!token &&
+						!user?.credential?.token &&
 						<Route 
 							path="/login"
 							element={ <LoginForm onSubmit={login} /> }
@@ -84,7 +86,7 @@ function App() {
 					}
 
 					{
-						!token && 
+						!user?.credential?.token &&
 						<Route 
 							path="/register"
 							element={ <RegisterForm onSubmit={register} /> }
